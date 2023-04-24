@@ -1,0 +1,12 @@
+.bg-login{
+    background-color: darkgreen !important;
+}
+.bg-login-main{
+    background-color:khaki !important;
+
+}
+.text-login-danger{
+   color: #ff5555 !important;
+   font-style: italic !important;
+}
+
