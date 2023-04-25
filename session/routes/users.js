@@ -20,11 +20,25 @@ router.get('/login', function(req, res, next){
 router.post('/login', async function(req, res, next){
   /**req.body.username, req.body.password */
   /**1)read a user from the RDBMS: */
+
   let userinfo = await db.readUser(req.body.username);
   if(!userinfo){
+    res.statusCode = 304;
     res.render('login',{info:'Incorrect username or password!'})
   } else {
-    res.json(userinfo);
+      //checking - is a password correct?
+      if (await cryptography.validatePassword(Buffer.from(req.body.password), userinfo.salt, userinfo.hashed_psw)){
+
+        //when success - wride a data to session and finaly redirecting to the start page
+        req.session.username = req.body.username;
+        req.session.userid = userinfo.userid;
+
+        res.redirect('/');
+      } else {
+        res.statusCode = 304;
+        res.render('login',{info:'Incorrect username or password!'})
+      }   
+  
   }
 
   //res.json(req.body);
