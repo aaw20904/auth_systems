@@ -2,10 +2,25 @@
 <html>
   <head>
     <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap-icons.css">
+    <link rel="stylesheet" href="/stylesheets/custom.css">
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <div class="container">
+      <section class="d-flex justify-content-end align-items-center">
+        <form action="/users/logout" method="POST">
+        <button type="submit"  class="btn btn-info btn-lg">
+                <span class="glyphicon glyphicon-log-out"></span> Log out
+        </button>>
+
+        </form>
+      
+      </section>
+        <h1><%= title %></h1>
+        <p>Welcome  <%= user %></p>
+    </div>
+  
   </body>
 </html>

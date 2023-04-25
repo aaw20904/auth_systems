@@ -1,4 +1,5 @@
 var express = require('express');
+const { resolve } = require('path');
 const { render } = require('../app');
 var router = express.Router();
 let cr = require('../cryptography');
@@ -17,28 +18,24 @@ router.get('/login', function(req, res, next){
   res.render('login.ejs',{info:''});
 })
 
+
+
 router.post('/login', async function(req, res, next){
   /**req.body.username, req.body.password */
-  /**1)read a user from the RDBMS: */
-
+  /**1)Is a user exits in RDBMS?: */
   let userinfo = await db.readUser(req.body.username);
-  if(!userinfo){
-    res.statusCode = 304;
-    res.render('login',{info:'Incorrect username or password!'})
+  if (!userinfo) {
+    res.render('login',{info:'Incorrect a name or password!'})
   } else {
-      //checking - is a password correct?
-      if (await cryptography.validatePassword(Buffer.from(req.body.password), userinfo.salt, userinfo.hashed_psw)){
-
-        //when success - wride a data to session and finaly redirecting to the start page
-        req.session.username = req.body.username;
+    //checking the password
+      if (await cryptography.validatePassword(req.body.password, userinfo.salt, userinfo.hashed_psw)) {
+        //when success - write a user data in the session
+        req.session.name = userinfo.username;
         req.session.userid = userinfo.userid;
-
         res.redirect('/');
       } else {
-        res.statusCode = 304;
-        res.render('login',{info:'Incorrect username or password!'})
-      }   
-  
+        res.render('login',{info:'incorrect a name or password!'})
+      }
   }
 
   //res.json(req.body);
@@ -70,6 +67,24 @@ router.post('/register', async function(req, res, next){
   res.redirect('/users/login');
 
 });
+
+router.post('/logout', async (req, res, next)=>{
+  try{
+        await new Promise((resolve, reject) => {
+            req.session.destroy((err)=>{
+                if (err) {
+                  reject(err);
+                } else {
+                  resolve();
+                }
+              })
+          });
+          res.redirect('/users/login');
+  } catch(e) {
+    throw new Error(e);
+  }
+
+})
 
 
 
