@@ -4,17 +4,19 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
+/**mysql storage - for the session */
 const MySQLStore = require('express-mysql-session')(session);
 
-const options = {
-	host: 'localhost',
-	port: 3306,
-	user: 'root',
-	password: '65535258',
-	database: 'myappbase',
-};
-
-const sessionStore = new MySQLStore(options);
+//create store
+const sessionStore = new MySQLStore(
+    {
+    host: 'localhost',
+    port: 3306,
+    user: 'root',
+    password: '65535258',
+    database: 'myappbase',
+  }
+);
 
 
 var indexRouter = require('./routes/index');
