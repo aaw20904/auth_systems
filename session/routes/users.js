@@ -34,11 +34,11 @@ router.post('/login', async function(req, res, next){
         req.session.userid = userinfo.userid;
         res.redirect('/');
       } else {
+        //when fail -reload a login page with a warning
         res.render('login',{info:'incorrect a name or password!'})
       }
   }
 
-  //res.json(req.body);
 });
 
 
@@ -49,9 +49,7 @@ router.get('/register', function(req, res, next){
 })
 
 router.post('/register', async function(req, res, next){
-  /**req.body.username, req.body.password */
-  //console.log(req.body);
-  //res.json(req.body);
+ 
   let registrationResult;
   let saltAndPassword;
   /**CHECK: is the same username in the DB? */
@@ -63,8 +61,9 @@ router.post('/register', async function(req, res, next){
   saltAndPassword = await cryptography.hashPassword(req.body.password);
  /**2) write into the DB */
   await db.addNewUser(req.body.username, saltAndPassword.hashedPsw, saltAndPassword.salt);
+  /**redirectong to the main page - to log in*/
   res.statusCode = 201;
-  res.redirect('/users/login');
+  res.redirect('/');
 
 });
 
