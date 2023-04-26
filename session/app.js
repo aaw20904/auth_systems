@@ -4,6 +4,18 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
+
+const options = {
+	host: 'localhost',
+	port: 3306,
+	user: 'root',
+	password: '65535258',
+	database: 'myappbase',
+};
+
+const sessionStore = new MySQLStore(options);
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -22,6 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //apply session middleware;\
 app.use(session({
+  store: sessionStore,
   secret: '15fe8abffe4',
   resave: false,
   saveUninitialized: true,
