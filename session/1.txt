@@ -1,1 +1,94 @@
+KEY four moments:
 
+-Create a session and connect a storage;
+-Connect the session middleware to express
+    BEFORE routers (working paths where a user get any rersource);
+-Create base registration procedure using DB (user , id , password);
+-Create base login procedure using db (user, password) -
+    afer success login assign username, usrid,  e.t.c. to 
+    the request.session object: "req.session.usrname = name;"
+-In any resource checking these propert(y/ies) (req.session.anyuserproperty).
+  When exists - user in system.When not - 304!.
+  
+
+To authorization we use an 'express-session" midddleware. This 
+soft creates cookie for each session. The cookie has a default 
+name 'cnnection.sid'. This cookie holds only  sessionID. When a user 
+request a resource - the middleware  get from the session storage 
+(default - memory, but !-highly-! recommended 
+using extern storage : REDIS, mysql, mongodb) user`s data (i.e. name, ID)
+ that had been saved before during login.The user`s data is now avaliable through
+  the property 'req.session'.When a session expired - the user data hes been destroying:
+  the session avaliable, but users data isn`t. 
+  
+ 1) firstly: create a express session and the storage
+ 
+ var session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
+
+//create store
+const sessionStore = new MySQLStore(
+    {
+    host: 'localhost',
+    port: 3306,
+    user: 'root',
+    password: '65535258',
+    database: 'myappbase',
+  }
+);
+
+2) Create session and use the 'express-session' middleware for the application:
+  ! Write this initialization BEFORE routes - because he midddleware 
+   apply the session info to 'request' object - it must be pass to next express routes;
+   
+  app.use(session({
+    store: sessionStore,
+    secret: '15fe8abffe4',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false, maxAge:(60000*60)|0 },
+  }))
+  
+  now, every time when user request  a resource - the 'session' middleware 
+  checking  cookie (is valid) and connect a new property 'request.session"
+  to the client request - it pass to next middlewares and routes. 
+  
+
+3)Relize own registration page and route:
+
+router.post('/register', async function(req, res, next){
+
+  let registrationResult;
+  let saltAndPassword;
+  /**CHECK: is the same username in the DB? */
+  if (await db.readUser(req.body.username)) {
+    res.render('register',{info:'User already exists!'})
+    return;
+  }
+ /**1) generating salt and hashed password */
+  saltAndPassword = await cryptography.hashPassword(req.body.password);
+ /**2) write into the DB */
+  await db.addNewUser(req.body.username, saltAndPassword.hashedPsw, saltAndPassword.salt);
+  res.statusCode = 201;
+  res.redirect('/users/login');
+
+});
+
+4) Realize own login page and route:
+router.post('/login', async function(req, res, next){
+  /**1)Is a user exits in RDBMS?: */
+  let userinfo = await db.readUser(req.body.username);
+  if (!userinfo) {
+    res.render('login',{info:'Incorrect a name or password!'})
+  } else {
+    //checking the password
+      if (await cryptography.validatePassword(req.body.password, userinfo.salt, userinfo.hashed_psw)) {
+        //when success - write a user data in the session
+        req.session.name = userinfo.username;
+        req.session.userid = userinfo.userid;
+        res.redirect('/');
+      } else {
+        //when fail - load a login page
+        res.render('login',{info:'incorrect a name or password!'})
+      }
+  }
