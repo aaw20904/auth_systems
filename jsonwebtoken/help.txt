@@ -11,3 +11,4 @@ jwt.verify(token, 'secretstring', function(err, decoded) {
   // when isn`t valid - err & decoded=undefined
   // when valid err=undefined & decoded=userdata
 }); 
+ //there ara avaliable to choose symmetric/asymmetryc, algorythm
