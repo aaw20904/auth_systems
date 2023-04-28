@@ -1,14 +1,20 @@
 var express = require('express');
 var router = express.Router();
+var jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  let headers = "Headers \r\n";
-  for(let idx=0; idx < req.rawHeaders.length; idx += 2) {
-    headers += ` ${req.rawHeaders[idx]}  ${req.rawHeaders[idx+1]} \r\n` 
+router.get('/', async function(req, res, next) {
+  /**has an authentication been successfull?*/
+  //NOTE: the authentication middleware is in "app.js" file 
+  if (! req.appAuthData ) {
+    res.statusCode = 401;
+    res.redirect('/users/login');
+  } else  {
+        /**when authorization   */
+        res.render('index',{title:'JWT', user:req.appAuthData.name});
   }
-  res.end(headers);
-  //res.render('index', { title: 'Express' });
+
 });
 
 module.exports = router;

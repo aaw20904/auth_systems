@@ -1,5 +1,4 @@
 
-/*https://roadmap.sh/guides/http-basic-authentication*/
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -7,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
-var cors = require('cors')
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -18,17 +17,43 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(cors({
-  "origin": "*",
-  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-  "preflightContinue": false,
-  "optionsSuccessStatus": 204
-}));
+/**using middleware: */
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+/** ! authentication middleware */
+app.use(async (req, res, next)=>{
+   let jwtData;
+   if(req.cookies.jwt) {
+    //when a cookie - 'token' exists:
+       try{
+            jwtData = await  new Promise((resolve, reject) => {
+                            jwt.verify (req.cookies.jwt, process.env.SECRET_KEY,(err, result)=>{
+                                if (err) {
+                                  reject(err);
+                                  //when the JWT isn`t valid:
+                                } else {
+                                  //when OK:
+                                  resolve(result);
+                                }
+                            })
+                       })
+        } catch(e) {
+          req.appAuthData = false;
+          next();
+        }
+        //when authentication has been passed  SUCCESSFULLY:
+        //apply userinfo to the request as a property: 
+        req.appAuthData = jwtData;
+        next();
+   } else {
+        req.appAuthData = false;
+        next();
+   }
+});
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
