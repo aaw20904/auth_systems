@@ -12,3 +12,5 @@ jwt.verify(token, 'secretstring', function(err, decoded) {
   // when valid err=undefined & decoded=userdata
 }); 
  //there ara avaliable to choose symmetric/asymmetryc, algorythm
+
+-to save a token in this app use a cookie with 'secret' attribute 
