@@ -1,1 +1,13 @@
 
+KEY punkts:
+
+-require library 'jsonwebtoken';
+-to sign a JWT and pass the data as object,
+   use method - jwt.sign(payload, secretOrPrivateKey, { expiresIn: 60 * 60 }, (err, token)=>{
+                        //jwt here: in "token" variable
+                      })
+ -to validate JWT - 
+jwt.verify(token, 'secretstring', function(err, decoded) {
+  // when isn`t valid - err & decoded=undefined
+  // when valid err=undefined & decoded=userdata
+}); 
