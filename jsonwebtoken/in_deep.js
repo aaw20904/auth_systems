@@ -1,5 +1,7 @@
 /// https://www.telerik.com/blogs/json-web-token-jwt-implementation-using-nodejs
- 
+/**I M P O R T A N T !*/
+ /***!!! this function is ONLY FOR example - for learning,
+ it ISN`T using in any part of the application****/
 const crypto = require ('crypto');
 /**1 Convert a string to Base64: */
 const toBase64 = obj => {
