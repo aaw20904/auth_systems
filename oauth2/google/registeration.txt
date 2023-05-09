@@ -10,6 +10,8 @@ https://developers.google.com/identity/sign-in/web/sign-in?hl=en
   It should be a method of Window: for example:
   
   window.mycallback = (auth_data) =>{
+     //print encoded JWT:
+     console.log(auth_data.credential);
     //... post JSON data to your server here
     //or du enything with user data
   }
