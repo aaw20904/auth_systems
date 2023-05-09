@@ -1,1 +1,22 @@
 https://developers.google.com/identity/sign-in/web/sign-in?hl=en
+
+// when you register your client app in google console (OAuth2 credentials ) -
+  you must register two "Authorized JavaScript origins" -
+  "http://localhost"
+  "http://localhost:5000"
+  
+  /***when you create a frontend part - you must
+  define a "callback" - a name of global funtion.
+  It should be a method of Window: for example:
+  
+  window.mycallback = (auth_data) =>{
+    //... post JSON data to your server here
+    //or du enything with user data
+  }
+  
+  In frontend you can include the following script:
+     <script src="https://accounts.google.com/gsi/client" async defer></script>
+  After this you cangenerate HTML content in the Google generator:
+    https://developers.google.com/identity/gsi/web/tools/configurator
+  
+  
