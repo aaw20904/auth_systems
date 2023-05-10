@@ -20,5 +20,7 @@ https://developers.google.com/identity/sign-in/web/sign-in?hl=en
      <script src="https://accounts.google.com/gsi/client" async defer></script>
   After this you cangenerate HTML content in the Google generator:
     https://developers.google.com/identity/gsi/web/tools/configurator
+    
+    https://developers.google.com/identity/sign-in/web/sign-in
   
   
