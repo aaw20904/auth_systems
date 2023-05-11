@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <script src="https://accounts.google.com/gsi/client" async defer></script>
+ 
+    <title>LogIn</title>
+</head>
+<body>
+    <div id="g_id_onload"
+     data-client_id="23739417343-t6l2fuemo568985e7i1btkodsp5s590d.apps.googleusercontent.com"
+     data-context="signin"
+     data-ux_mode="popup"
+     data-callback="handleCredentialResponse"
+     data-auto_prompt="false">
+</div>
+
+<div class="g_id_signin"
+     data-type="standard"
+     data-shape="rectangular"
+     data-theme="outline"
+     data-text="signin_with"
+     data-size="large"
+     data-logo_alignment="left">
+</div>
+
+<a href="/logout">LoOut</a>
+<script>
+ 
+
+//1) the google frontend JS library request a token from the Google auth server
+
+
+  window.handleCredentialResponse = async (par) => {
+    //2) when a response has been received - send to the "/login" route
+       const response = await fetch("/login", {
+                          method: "POST", // *GET, POST, PUT, DELETE, etc.
+                          mode: "cors", // no-cors, *cors, same-origin
+                          cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                          credentials: "same-origin", // include, *same-origin, omit
+                          headers: {
+                            "Content-Type": "application/json",
+                          },
+                          body: JSON.stringify({token: par.credential}), // body data type must match "Content-Type" header
+                          });
+  await response.json(); // parses JSON response into native JavaScript objects
+       window.location.replace("/dashboard");    
+    
+  };
+
+</script>
+</body>
+</html>
