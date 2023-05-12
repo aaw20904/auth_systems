@@ -1,0 +1,6 @@
+---deprecated method---
+  https://developers.google.com/identity/sign-in/web/sign-in
+---->>> - please open THIS link: migration to  the new library---
+  https://developers.google.com/identity/gsi/web/guides/migration
+---->>>>-- backend server side verification using google OAuth2 server
+  https://developers.google.com/identity/gsi/web/guides/verify-google-id-token
