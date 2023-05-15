@@ -5,6 +5,53 @@ const {OAuth2Client} = require('google-auth-library');
 //your google client key. You can get it in the "OAuth2 credantails" in the google console  
 const CLIENT_ID = '23739417343-t6l2fuemo568985e7i1btkodsp5s590d.apps.googleusercontent.com'
 const client = new OAuth2Client(CLIENT_ID);
+/**when you use helmet.js - there is a configuration belove:*/
+const helmetOpts = {
+   contentSecurityPolicy: {
+      directives: {
+        defaultSrc:["'self'", 'fonts.gstatic.com', 'fonts.googleapis.com', "accounts.google.com","ssl.gstatic.com"],
+        scriptSrc: ["'self'", 'fonts.gstatic.com', 'fonts.googleapis.com', "accounts.google.com","ssl.gstatic.com"],
+        styleSrc :["'self'",'fonts.gstatic.com','fonts.googleapis.com',"cdn.jsdelivr.net","accounts.google.com","ssl.gstatic.com"],
+        imgSrc:["'self'",'fonts.gstatic.com','fonts.googleapis.com',"cdn.jsdelivr.net","accounts.google.com","ssl.gstatic.com"],
+        connectSrc:["'self'","accounts.google.com","ssl.gstatic.com"],
+        fontSrc:["'self'",'fonts.gstatic.com','fonts.googleapis.com',"accounts.google.com"],
+        objectSrc:["'self'",'fonts.gstatic.com','fonts.googleapis.com',"cdn.jsdelivr.net","accounts.google.com","ssl.gstatic.com"],
+        mediaSrc:["'self'"],
+        frameSrc:["'self'",'fonts.gstatic.com','fonts.googleapis.com',"cdn.jsdelivr.net","accounts.google.com","ssl.gstatic.com"],
+        sandbox:null,
+        reportUri:null,
+        childSrc:["self"],
+        formAction:["'self'","accounts.google.com","ssl.gstatic.com"],
+        frameAncestors:["'none'"],
+        pluginTypes:null,
+        baseUri:null,
+        reportTo:null,
+        workerSrc:null,
+        manifestSrc:null,
+        prefetchSrc:null,
+        navigateTo:null,
+      },
+
+    },
+
+    crossOriginEmbedderPolicy:{ policy: "credentialless" },
+    crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" },
+    crossOriginResourcePolicy: { policy: "same-site" },
+    //OriginAgentCluster:false,
+     referrerPolicy: {
+      policy: ["origin",],
+    },
+    StrictTransportSecurity:false,
+   // XContentTypeOptions:false,
+    XDNSPrefetchControl:false,
+    //XDownloadOptions:false,
+   // XFrameOptions:false,
+   // XPermittedCrossDomainPolicies:false,
+    xPoweredBy:false,
+  
+
+}
+
 
 const app =express();
 const port = process.env.PORT || 5000;
