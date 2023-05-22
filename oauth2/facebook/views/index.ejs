@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>index page</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body style="display:flex; flex-direction:column;align-items:flex-start;">
+    <h1>Hello, <%= usr.first_name %></h1>
+    <img src=<%= usr.picture.data.url %> alt="user">
+    <a href="/users/logoff">Exit</a>
+  </body>
+</html>
