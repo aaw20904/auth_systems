@@ -21,6 +21,7 @@ Get appID and the secret.
 2)Receive a response with code;
 3)Sending GETrequest with URI params = clientID, client_secret 
 4)receive an access token
+5)Sending request to FaceBook Graph API - to retrive user name and photo  
 
 */
 
