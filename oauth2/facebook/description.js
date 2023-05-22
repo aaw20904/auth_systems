@@ -24,5 +24,5 @@ Get appID and the secret.
 5)Sending request to FaceBook Graph API - to retrive user name and photo  
 
 */
-
+https://medium.com/@jackrobertscott/facebook-auth-with-node-js-c4bb90d03fc0
 */
