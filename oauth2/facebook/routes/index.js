@@ -4,6 +4,7 @@ const axios = require("axios");
 
 async function middleware (req, ers, next) {
   if (req.cookies.fb_token) {
+    try{
       let usrInfo = await axios({
           url: 'https://graph.facebook.com/me',
         method: 'get',
@@ -14,6 +15,11 @@ async function middleware (req, ers, next) {
       })
 
       req.usrData = usrInfo.data;
+    }  catch (e) {
+      //when token is incorrect
+      req.usrData = false;
+      return;
+    }
   } else {
    req.usrData = false;
   }
