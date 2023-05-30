@@ -1,1 +1,5 @@
 
+in github enter to the page:
+Settings-> developer settings-> create app or 
+oAuth apps->
+
