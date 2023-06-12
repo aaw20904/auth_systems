@@ -18,6 +18,6 @@ jwt.verify(token, 'secretstring', function(err, decoded) {
 
 /// https://www.telerik.com/blogs/json-web-token-jwt-implementation-using-nodejs
 
-////// a d d i t i o n a l   i n f o    
+////// a d d i t i o n a l   i n f o    - refresh tokens: ----------------
 https://aryanshaw.hashnode.dev/jwt-token-rotation-and-reuse-detection
-
+https://stateful.com/blog/oauth-refresh-token-best-practices
