@@ -21,3 +21,4 @@ jwt.verify(token, 'secretstring', function(err, decoded) {
 ////// a d d i t i o n a l   i n f o    - refresh tokens: ----------------
 https://aryanshaw.hashnode.dev/jwt-token-rotation-and-reuse-detection
 https://stateful.com/blog/oauth-refresh-token-best-practices
+https://betterprogramming.pub/should-we-store-tokens-in-db-af30212b7f22
