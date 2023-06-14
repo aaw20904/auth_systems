@@ -22,3 +22,4 @@ jwt.verify(token, 'secretstring', function(err, decoded) {
 https://aryanshaw.hashnode.dev/jwt-token-rotation-and-reuse-detection
 https://stateful.com/blog/oauth-refresh-token-best-practices
 https://betterprogramming.pub/should-we-store-tokens-in-db-af30212b7f22
+// question about bug: https://stackoverflow.com/questions/76358141/jwt-sign-with-algorithm-rs256-throws-secretorprivatekey-must-be-an-asymmetric-k
