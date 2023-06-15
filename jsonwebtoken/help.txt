@@ -1,3 +1,6 @@
+USE "jose" LIBRARY - it works faster that jsonwebtoken:  jsonwebtoken=2.6mS, jose=1.1mS
+
+
 At the start of this article, I said that there are good usecases for JWT, but that they're just not suitable as a session mechanism. This still holds true; the usecases where JWT is particularly effective are typically usecases where they are used as a single-use authorization token.
 ***
    a) The tokens are short-lived. They only need to be valid for a few minutes, to allow a client to initiate the download.
